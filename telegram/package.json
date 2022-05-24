@@ -1,0 +1,22 @@
+{
+  "name": "cscmobi-nestjs-telegram",
+  "version": "1.0.0",
+  "description": "Là module nestjs để gửi message vào telegram",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tuyennv38/nestjs-util.git"
+  },
+  "keywords": [
+    "nestjs"
+  ],
+  "author": "tuyennv",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tuyennv38/nestjs-util/issues"
+  },
+  "homepage": "https://github.com/tuyennv38/nestjs-util#readme"
+}
