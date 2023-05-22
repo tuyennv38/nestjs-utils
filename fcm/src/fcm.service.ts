@@ -1,13 +1,12 @@
-
-import {Injectable, Inject, Logger } from '@nestjs/common';
+import { Injectable } from '@nestjs/common/decorators/core/injectable.decorator';
 import * as firebaseAdmin from 'firebase-admin';
-import { FcmOptions, FCM_OPTIONS } from './fcm.options';
+import { FcmOptions } from './fcm.options';
+import { Message } from 'firebase-admin/lib/messaging/messaging-api';
 
 @Injectable()
 export class FcmService {
     constructor(
-        @Inject(FCM_OPTIONS) private fcmOptionsProvider: FcmOptions,
-        private readonly logger: Logger,
+        private fcmOptionsProvider: FcmOptions,
     ) {
         if (firebaseAdmin.apps.length === 0) {
             firebaseAdmin.initializeApp({
@@ -48,7 +47,6 @@ export class FcmService {
                     silent ? this.optionsSilent : this.options,
                 );
         } catch (error) {
-            this.logger.error(error.message, error.stackTrace, 'fcm-nestjs');
             throw error;
         }
         return result;
@@ -80,9 +78,17 @@ export class FcmService {
                     silent ? this.optionsSilent : this.options,
                 );
         } catch (error) {
-            this.logger.error(error.message, error.stackTrace, 'fcm-nestjs');
             throw error;
         }
         return result;
+    }
+    async subscribeToTopic(registrationTokenOrTokens: string | string[], topic: string) {
+        return await firebaseAdmin.messaging().subscribeToTopic(registrationTokenOrTokens, topic)
+    }
+    async unsubscribeFromTopic(registrationTokenOrTokens: string | string[], topic: string) {
+        return await firebaseAdmin.messaging().unsubscribeFromTopic(registrationTokenOrTokens, topic)
+    }
+    async send(message:Message) {
+        return await firebaseAdmin.messaging().send(message);
     }
 }

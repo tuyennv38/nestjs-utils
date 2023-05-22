@@ -36,7 +36,7 @@ import { FcmModule } from 'cscmobi-nestjs-fcm';
             clientEmail: '---YOUR CLIENT EMAIL---',
             privateKey: '---YOUR PRIVATEKEY----'
         }
-    }),
+    },'fcm_service'),
   ],
   controllers: [],
 })
@@ -48,7 +48,7 @@ export class AppModule {}
 ```typescript
 @Injectable()
 export class SampleService {
-  constructor(private readonly fcmService: FcmService) {}
+  constructor(@Inject('fcm_service') private readonly fcmService: FcmService) {}
 
   async sendToDevices() {
     await this.fcmService.sendNotification([
